@@ -49,7 +49,8 @@ public class ArrayList {
      * 清除所有元素
      */
     public void clear() {
-
+        //只需要修改size的值，size会控制其它方法(优点：不需要释放内存，提高了性能，因为这个集合很可能会再次使用，add的时候，直接覆盖原有值即可)
+        size = 0;
     }
 
     /**

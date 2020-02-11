@@ -46,11 +46,16 @@ public class FibonacciNumberTest {
         int first = 0;
         int second = 1;
         for (int i = 0; i < n - 1; i++) {
+            //代码1：
             //相加前两个值
-            int sum = first + second;
-            first = second;
-            //上一次相加的结果，作为下次相加的second
-            second = sum;
+//            int sum = first + second;
+//            first = second;
+//            //上一次相加的结果，作为下次相加的second
+//            second = sum;
+
+            //代码2：节省一个变量
+            second += first;
+            first = second - first;
         }
         return second;
     }
@@ -91,7 +96,7 @@ public class FibonacciNumberTest {
 //        System.out.println(fib2(64));
 
         //测试两种解法的耗时情况
-        int n = 46;
+        int n = 31;
         TimeTool.test("fib1", new TimeTool.Task() {
             @Override
             public void execute() {
