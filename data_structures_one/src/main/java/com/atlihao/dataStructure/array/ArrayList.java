@@ -88,7 +88,7 @@ public class ArrayList {
      * @param element
      */
     public void add(int element) {
-
+        add(size, element);
     }
 
     /**
@@ -99,9 +99,7 @@ public class ArrayList {
      */
     public int get(int index) {
         //校验入参合法性
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
-        }
+        rangeCheck(index);
         return elements[index];
     }
 
@@ -114,9 +112,7 @@ public class ArrayList {
      */
     public int set(int index, int element) {
         //校验入参合法性
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
-        }
+        rangeCheck(index);
         //取出原来的元素
         int old = elements[index];
         //新元素覆盖旧元素
@@ -131,7 +127,13 @@ public class ArrayList {
      * @param element
      */
     public void add(int index, int element) {
-
+        //校验入参合法性（插入允许等于size，也就是追加）
+        rangeCheckForAdd(index);
+        for (int i = size - 1; i >= index; i--) {
+            elements[i + 1] = elements[i];
+        }
+        elements[index] = element;
+        size++;
     }
 
     /**
@@ -141,7 +143,14 @@ public class ArrayList {
      * @return 返回要删除的元素
      */
     public int remove(int index) {
-        return 0;
+        //校验入参合法性
+        rangeCheck(index);
+        int old = elements[index];
+        for (int i = index + 1; i <= size - 1; i++) {
+            elements[i - 1] = elements[i];
+        }
+        size--;
+        return old;
     }
 
     /**
@@ -157,5 +166,47 @@ public class ArrayList {
             }
         }
         return ELEMENT_NOT_FOUND;
+    }
+
+    /*封装统一的异常格式*/
+    private void outOfBounds(int index) {
+        throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
+    }
+
+    /*检查下标*/
+    private void rangeCheck(int index) {
+        if (index < 0 || index >= size) {
+            outOfBounds(index);
+        }
+    }
+
+    /*为添加方法，检查下标*/
+    private void rangeCheckForAdd(int index) {
+        if (index < 0 || index > size) {
+            outOfBounds(index);
+        }
+    }
+
+    @Override
+    public String toString() {
+        // size=3, [99,88,77]
+        StringBuilder string = new StringBuilder();
+        string.append("size=").append(size).append(", [");
+        for (int i = 0; i < size; i++) {
+            //方法二：如果不是第一个下标的话，则先拼接上,号
+            //优点：这里不用少做一个减法运算。（所以这个更加好）
+            if (i != 0) {
+                string.append(", ");
+            }
+            string.append(elements[i]);
+
+            //方法一：不是最后一个元素，则拼接上,号
+//            if (i != size - 1) {
+//                string.append(", ");
+//            }
+
+        }
+        string.append("]");
+        return string.toString();
     }
 }
