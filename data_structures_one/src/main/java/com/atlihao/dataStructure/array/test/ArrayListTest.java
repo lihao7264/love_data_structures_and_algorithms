@@ -1,6 +1,7 @@
 package com.atlihao.dataStructure.array.test;
 
 import com.atlihao.dataStructure.array.ArrayList;
+import com.atlihao.dataStructure.common.Asserts;
 
 /**
  * @author lihao
@@ -19,9 +20,9 @@ public class ArrayListTest {
         list.add(55);
 
 //        list.remove(2);
-        list.add(1,100);
-        list.add(list.size(),100);
-
+        list.add(1, 100);
+        list.add(list.size(), 100);
+        Asserts.test(list.get(1) == 100);
         System.out.println(list);
     }
 }

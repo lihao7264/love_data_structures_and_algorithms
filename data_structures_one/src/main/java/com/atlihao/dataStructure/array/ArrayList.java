@@ -19,9 +19,9 @@ public class ArrayList {
     private int[] elements;
 
     /**
-     * 默认容量为10
+     * 默认容量为2
      */
-    private static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 2;
 
     /**
      * 没有找到元素，则返回-1
@@ -129,6 +129,7 @@ public class ArrayList {
     public void add(int index, int element) {
         //校验入参合法性（插入允许等于size，也就是追加）
         rangeCheckForAdd(index);
+        ensureCapacity(size + 1);
         for (int i = size - 1; i >= index; i--) {
             elements[i + 1] = elements[i];
         }
@@ -166,6 +167,26 @@ public class ArrayList {
             }
         }
         return ELEMENT_NOT_FOUND;
+    }
+
+    /**
+     * 保证要有capacity的容量
+     *
+     * @param capacity
+     */
+    private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity >= capacity) {
+            return;
+        }
+        //新容量为旧容量的1.5倍。 使用右移代表0.5
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        int[] newElements = new int[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        elements = newElements;
+        System.out.println(oldCapacity + "扩容为" + newCapacity);
     }
 
     /*封装统一的异常格式*/
