@@ -1,12 +1,14 @@
 package com.atlihao.dataStructure.array;
 
+
 /**
  * @author lihao
  * @ClassName ArrayList
  * @Since 2020/2/9
  * @Description 动态数组类
  */
-public class ArrayList {
+@SuppressWarnings("unchecked")
+public class ArrayList<E> {
 
     /**
      * 元素的数量
@@ -16,12 +18,12 @@ public class ArrayList {
     /**
      * 所有的元素
      */
-    private int[] elements;
+    private E[] elements;
 
     /**
      * 默认容量为2
      */
-    private static final int DEFAULT_CAPACITY = 2;
+    private static final int DEFAULT_CAPACITY = 10;
 
     /**
      * 没有找到元素，则返回-1
@@ -42,7 +44,7 @@ public class ArrayList {
     public ArrayList(int capacity) {
         //传入的capacity小于10，则都为10
         capacity = (capacity < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
-        elements = new int[capacity];
+        elements = (E[]) new Object[capacity];
     }
 
     /**
@@ -77,7 +79,7 @@ public class ArrayList {
      * @param element
      * @return
      */
-    public boolean contains(int element) {
+    public boolean contains(E element) {
         //indexOf方法没有返回元素不存在，就包含
         return indexOf(element) != ELEMENT_NOT_FOUND;
     }
@@ -87,7 +89,7 @@ public class ArrayList {
      *
      * @param element
      */
-    public void add(int element) {
+    public void add(E element) {
         add(size, element);
     }
 
@@ -97,7 +99,7 @@ public class ArrayList {
      * @param index
      * @return
      */
-    public int get(int index) {
+    public E get(int index) {
         //校验入参合法性
         rangeCheck(index);
         return elements[index];
@@ -110,11 +112,11 @@ public class ArrayList {
      * @param element
      * @return 原来的元素
      */
-    public int set(int index, int element) {
+    public E set(int index, E element) {
         //校验入参合法性
         rangeCheck(index);
         //取出原来的元素
-        int old = elements[index];
+        E old = elements[index];
         //新元素覆盖旧元素
         elements[index] = element;
         return old;
@@ -126,7 +128,7 @@ public class ArrayList {
      * @param index
      * @param element
      */
-    public void add(int index, int element) {
+    public void add(int index, E element) {
         //校验入参合法性（插入允许等于size，也就是追加）
         rangeCheckForAdd(index);
         ensureCapacity(size + 1);
@@ -143,10 +145,10 @@ public class ArrayList {
      * @param index
      * @return 返回要删除的元素
      */
-    public int remove(int index) {
+    public E remove(int index) {
         //校验入参合法性
         rangeCheck(index);
-        int old = elements[index];
+        E old = elements[index];
         for (int i = index + 1; i <= size - 1; i++) {
             elements[i - 1] = elements[i];
         }
@@ -160,7 +162,7 @@ public class ArrayList {
      * @param element
      * @return
      */
-    public int indexOf(int element) {
+    public int indexOf(E element) {
         for (int i = 0; i < size; i++) {
             if (elements[i] == element) {
                 return i;
@@ -181,7 +183,7 @@ public class ArrayList {
         }
         //新容量为旧容量的1.5倍。 使用右移代表0.5
         int newCapacity = oldCapacity + (oldCapacity >> 1);
-        int[] newElements = new int[newCapacity];
+        E[] newElements = (E[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
             newElements[i] = elements[i];
         }
