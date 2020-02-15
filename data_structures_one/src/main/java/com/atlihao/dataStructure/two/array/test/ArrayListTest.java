@@ -1,7 +1,8 @@
-package com.atlihao.dataStructure.array.test;
+package com.atlihao.dataStructure.two.array.test;
 
-import com.atlihao.dataStructure.array.ArrayList;
 import com.atlihao.dataStructure.common.domain.Person;
+import com.atlihao.dataStructure.common.interfaces.List;
+import com.atlihao.dataStructure.two.array.ArrayList;
 
 /**
  * @author lihao
@@ -53,7 +54,7 @@ public class ArrayListTest {
      * @param args
      */
     public static void main(String[] args) {
-        ArrayList<Person> persons = new ArrayList<>();
+        List<Person> persons = new ArrayList<>();
         persons.add(new Person(10, "Jack"));
         persons.add(null);
         persons.add(new Person(12, "James"));

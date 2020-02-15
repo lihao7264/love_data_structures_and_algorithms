@@ -1,4 +1,4 @@
-package com.atlihao.dataStructure.complex;
+package com.atlihao.dataStructure.one.complex;
 
 /**
  * @author lihao

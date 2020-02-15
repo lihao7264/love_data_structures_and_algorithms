@@ -1,5 +1,7 @@
-package com.atlihao.dataStructure.array;
+package com.atlihao.dataStructure.two.array;
 
+
+import com.atlihao.dataStructure.common.abstracts.AbstractList;
 
 /**
  * @author lihao
@@ -8,12 +10,7 @@ package com.atlihao.dataStructure.array;
  * @Description 动态数组类
  */
 @SuppressWarnings("unchecked")
-public class ArrayList<E> {
-
-    /**
-     * 元素的数量
-     */
-    private int size;
+public class ArrayList<E> extends AbstractList<E> {
 
     /**
      * 所有的元素
@@ -24,12 +21,6 @@ public class ArrayList<E> {
      * 默认容量为2
      */
     private static final int DEFAULT_CAPACITY = 10;
-
-    /**
-     * 没有找到元素，则返回-1
-     */
-    private static final int ELEMENT_NOT_FOUND = -1;
-
 
     public ArrayList() {
         //默认10个大小的数组
@@ -50,6 +41,7 @@ public class ArrayList<E> {
     /**
      * 清除所有元素
      */
+    @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
             elements[i] = null;
@@ -59,49 +51,12 @@ public class ArrayList<E> {
     }
 
     /**
-     * 元素的数量
-     *
-     * @return
-     */
-    public int size() {
-        return size;
-    }
-
-    /**
-     * 是否为空
-     *
-     * @return
-     */
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    /**
-     * 是否包含某个元素
-     *
-     * @param element
-     * @return
-     */
-    public boolean contains(E element) {
-        //indexOf方法没有返回元素不存在，就包含
-        return indexOf(element) != ELEMENT_NOT_FOUND;
-    }
-
-    /**
-     * 添加元素到最后面
-     *
-     * @param element
-     */
-    public void add(E element) {
-        add(size, element);
-    }
-
-    /**
      * 返回index位置对应的元素
      *
      * @param index
      * @return
      */
+    @Override
     public E get(int index) {
         //校验入参合法性
         rangeCheck(index);
@@ -115,6 +70,7 @@ public class ArrayList<E> {
      * @param element
      * @return 原来的元素
      */
+    @Override
     public E set(int index, E element) {
         //校验入参合法性
         rangeCheck(index);
@@ -131,6 +87,7 @@ public class ArrayList<E> {
      * @param index
      * @param element
      */
+    @Override
     public void add(int index, E element) {
         //校验入参合法性（插入允许等于size，也就是追加）
         rangeCheckForAdd(index);
@@ -148,6 +105,7 @@ public class ArrayList<E> {
      * @param index
      * @return 返回要删除的元素
      */
+    @Override
     public E remove(int index) {
         //校验入参合法性
         rangeCheck(index);
@@ -175,6 +133,7 @@ public class ArrayList<E> {
      * @param element
      * @return
      */
+    @Override
     public int indexOf(E element) {
         if (element == null) {
             for (int i = 0; i < size; i++) {
@@ -210,25 +169,6 @@ public class ArrayList<E> {
         }
         elements = newElements;
         System.out.println(oldCapacity + "扩容为" + newCapacity);
-    }
-
-    /*封装统一的异常格式*/
-    private void outOfBounds(int index) {
-        throw new IndexOutOfBoundsException("Index:" + index + ",Size:" + size);
-    }
-
-    /*检查下标*/
-    private void rangeCheck(int index) {
-        if (index < 0 || index >= size) {
-            outOfBounds(index);
-        }
-    }
-
-    /*为添加方法，检查下标*/
-    private void rangeCheckForAdd(int index) {
-        if (index < 0 || index > size) {
-            outOfBounds(index);
-        }
     }
 
     @Override
