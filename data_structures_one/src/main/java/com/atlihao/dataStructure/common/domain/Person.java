@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
-import java.util.Objects;
-
 /**
  * @author lihao
  * @ClassName Person
@@ -36,7 +34,10 @@ public class Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return age == person.age;
+        if (o instanceof Person) {
+            Person person = (Person) o;
+            return age == person.age;
+        }
+        return false;
     }
 }
