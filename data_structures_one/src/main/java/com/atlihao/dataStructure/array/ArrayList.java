@@ -51,7 +51,10 @@ public class ArrayList<E> {
      * 清除所有元素
      */
     public void clear() {
-        //只需要修改size的值，size会控制其它方法(优点：不需要释放内存，提高了性能，因为这个集合很可能会再次使用，add的时候，直接覆盖原有值即可)
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        //基本数据类型，只需要修改size的值，size会控制其它方法(优点：不需要释放内存，提高了性能，因为这个集合很可能会再次使用，add的时候，直接覆盖原有值即可)
         size = 0;
     }
 
@@ -132,8 +135,8 @@ public class ArrayList<E> {
         //校验入参合法性（插入允许等于size，也就是追加）
         rangeCheckForAdd(index);
         ensureCapacity(size + 1);
-        for (int i = size - 1; i >= index; i--) {
-            elements[i + 1] = elements[i];
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
         }
         elements[index] = element;
         size++;
@@ -149,11 +152,21 @@ public class ArrayList<E> {
         //校验入参合法性
         rangeCheck(index);
         E old = elements[index];
-        for (int i = index + 1; i <= size - 1; i++) {
+        for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
-        size--;
+        //最后一个位置清空，释放不需要的对象
+        elements[--size] = null;
         return old;
+    }
+
+    /**
+     * 删除对应的元素
+     *
+     * @param element
+     */
+    public void remove(E element) {
+        remove(indexOf(element));
     }
 
     /**
@@ -163,9 +176,17 @@ public class ArrayList<E> {
      * @return
      */
     public int indexOf(E element) {
-        for (int i = 0; i < size; i++) {
-            if (elements[i] == element) {
-                return i;
+        if (element == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element.equals(elements[i])) {
+                    return i;
+                }
             }
         }
         return ELEMENT_NOT_FOUND;
