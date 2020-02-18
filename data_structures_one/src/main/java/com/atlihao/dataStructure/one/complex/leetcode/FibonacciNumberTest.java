@@ -1,4 +1,4 @@
-package com.atlihao.dataStructure.one.complex;
+package com.atlihao.dataStructure.one.complex.leetcode;
 
 import com.atlihao.dataStructure.common.TimeTool;
 
