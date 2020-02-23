@@ -4,17 +4,21 @@ import com.atlihao.dataStructure.common.abstracts.AbstractList;
 
 /**
  * @author lihao
- * @ClassName LinkedList
+ * @ClassName LinkedList2
  * @Since 2020/2/15
- * @Description 链表类
+ * @Description 链表类--增加虚拟头结点
  */
 @SuppressWarnings("unchecked")
-public class LinkedList<E> extends AbstractList<E> {
+public class LinkedList2<E> extends AbstractList<E> {
 
     /**
      * 链表的第一个节点
      */
     private Node<E> first;
+
+    public LinkedList2() {
+        this.first = new Node<>(null, null);
+    }
 
     @Override
     public void clear() {
@@ -38,15 +42,10 @@ public class LinkedList<E> extends AbstractList<E> {
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-        if (index == 0) {
-            //替换first值
-            first = new Node<>(element, first);
-        } else {
-            //获取要插入位置的前一个节点
-            Node<E> prev = node(index - 1);
-            //修改前一个节点以及创建当前节点(并设置next值为前一个节点的next值)
-            prev.next = new Node<>(element, prev.next);
-        }
+        //获取要插入位置的前一个节点（0下标的前面节点是first）
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        //修改前一个节点以及创建当前节点(并设置next值为前一个节点的next值)
+        prev.next = new Node<>(element, prev.next);
         size++;
     }
 
@@ -54,21 +53,16 @@ public class LinkedList<E> extends AbstractList<E> {
     public E remove(int index) {
         rangeCheck(index);
         //被删除的节点对象
-        Node<E> node = first;
-        if (index == 0) {
-            first = first.next;
-        } else {
-            Node<E> prev = node(index - 1);
-            node = prev.next;
-            prev.next = prev.next.next;
-        }
+        Node<E> prev = index == 0 ? first : node(index - 1);
+        Node<E> node = prev.next;
+        prev.next = prev.next.next;
         size--;
         return node.element;
     }
 
     @Override
     public int indexOf(E element) {
-        Node<E> node = first;
+        Node<E> node = first.next;
         if (element == null) {
             for (int i = 0; i < size; i++) {
                 if (node.element == null) {
@@ -92,7 +86,7 @@ public class LinkedList<E> extends AbstractList<E> {
         // size=3, [99,88,77]
         StringBuilder string = new StringBuilder();
         string.append("size=").append(size).append(", [");
-        Node<E> node = first;
+        Node<E> node = first.next;
         for (int i = 0; i < size; i++) {
             //方法二：如果不是第一个下标的话，则先拼接上,号
             //优点：这里不用少做一个减法运算。（所以这个更加好）
@@ -119,7 +113,7 @@ public class LinkedList<E> extends AbstractList<E> {
      */
     private Node<E> node(int index) {
         rangeCheck(index);
-        Node<E> node = first;
+        Node<E> node = first.next;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
