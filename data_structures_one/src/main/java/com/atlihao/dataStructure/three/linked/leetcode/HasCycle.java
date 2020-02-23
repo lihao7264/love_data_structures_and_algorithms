@@ -12,6 +12,7 @@ public class HasCycle {
 
     /**
      * 解法：快慢指针法
+     * 时间复杂度：O(n)
      * @param head
      * @return
      */
