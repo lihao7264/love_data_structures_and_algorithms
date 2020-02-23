@@ -23,11 +23,11 @@ public class HasCycle {
         ListNode fastNode = head.next;
         //校验是否到尾结点
         while (fastNode != null && fastNode.next != null) {
+            slowNode = slowNode.next;
+            fastNode = fastNode.next.next;
             if (slowNode == fastNode) {
                 return Boolean.TRUE;
             }
-            slowNode = slowNode.next;
-            fastNode = fastNode.next.next;
         }
         return Boolean.FALSE;
     }
